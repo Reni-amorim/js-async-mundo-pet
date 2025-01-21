@@ -96,7 +96,7 @@ form div input,
 textarea {
     width: 100%;
     padding: 8px 16px;
-    background-color: var(--secondary-color);
+    background-color: var(--text-color);
     border: none;
     border-radius: 4px;
     font-family: var(--font-family);
@@ -113,7 +113,7 @@ textarea {
 
 .lista-tags li {
     display: flex;
-    background-color: var(--secondary-color);
+    background-color: var(--text-color);
     color: var(--background-color);
     gap: 10px;
     padding: 4px 8px;
@@ -123,9 +123,10 @@ textarea {
 
 .lista-tags {
     display: flex;
+    gap: 10px;
 }
 
-container-btn {
+.container-btn {
     display: flex;
     gap: 24px;
     justify-content: space-between;
@@ -146,4 +147,93 @@ container-btn {
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
     position: relative;
+}
+
+.btn-descartar::after {
+    content: "";
+    background-image: url("./img/trash.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 8px; 
+}
+
+.btn-publicar {
+    background-color: var(--primary-color);
+    color: var(--itens-background);
+    border: 1px solid var(--primary-color);
+    position: relative;
+}
+
+.btn-publicar::after {
+    content: "";
+    background-image: url("./img/upload-2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: var(--black);
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+}
+
+.container-descricao {
+    width: 422px;
+}
+
+.main-imagem {
+    border-radius: 8px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container-imagem {
+    height: 368px;
+    padding: 24px 16px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+}
+
+.container-upload-imagem button {
+    margin: 16px 0px 8px 0px;
+    background-color: var(--itens-background);
+    border: 1px solid var(--secondary-color);
+    border-radius: 8px;
+    color: var(--secondary-color);
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+}
+
+.container-upload-imagem button::after {
+    content: "";
+    background-image: url("./img/upload.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+}
+
+.container-imagem-nome {
+    display: flex;
+    gap: 8px;
+    color: var(--secondary-color);
+    font-size: 15px;
 }
