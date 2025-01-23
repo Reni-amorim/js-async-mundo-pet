@@ -52,6 +52,58 @@ inputUpload.addEventListener("change", async (evento) => {
         }
     }
 })
+
+// Cria uma variável e seleciona elementos HTML da página 
+const inputTags = document.getElementById("input-tags");
+const listaTags = document.getElementById("lista-tags");
+
+//verifica o pressionamento da tecla enter
+inputTags.addEventListener("keypress", (evento) => {
+    // Se o enter for pressionado executa uma função
+    if (evento.key === "Enter") {
+        //Previne o padrão de reload da página
+        evento.preventDefault();
+        // pega o valor digitado, trim garante e remove espaços em branco no começo e final
+        const tagTexto = inputTags.value.trim();
+        //
+        if (tagTexto !== "" && tagsDisponiveis.includes(tagTexto)) {
+            // Cria um novo elemento li
+            const tagNova = document.createElement("li");
+            // Adiciona o texto digitado como novo paragrafo dentro da li
+            tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`
+            // cria a tag como li filho da lista de tags
+            listaTags.appendChild(tagNova);
+            // Limpa o campo de input
+            inputTags.value = "";
+        } else {alert("Digite uma tag válida")};
+    }
+})
+
+listaTags.addEventListener("click", (evento) => {
+    //Verifica o local clicado
+    if (evento.target.classList.contains("remove-tag")) {
+        // Pega o elemento clicado no caso a classe remove-tag
+        const tagToRemove = evento.target.parentElement;
+        // Pega o elemento filho e remove através do remove child
+        listaTags.removeChild(tagToRemove);
+    } 
+}) 
+
+// Variável disponíveis
+const tagsDisponiveis = ["gato-laranja", "gato-preto", "gato-branco"]
+
+// Async function para buscar as tags disponíveis
+async function buscarTags(tagtexto) {
+    return new Promise((resolve) => {
+        // Time out para simular a busca
+        setTimeout(() => {
+            resolve(tagsDisponiveis.includes(tagtexto));
+        }, 1000) 
+    })
+}
+
+// função para remover tags
+
 /*
 let listaDeGatos = [
     { nome: "Gato 1", cor: "preto" },
