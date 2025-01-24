@@ -57,28 +57,6 @@ inputUpload.addEventListener("change", async (evento) => {
 const inputTags = document.getElementById("input-tags");
 const listaTags = document.getElementById("lista-tags");
 
-//verifica o pressionamento da tecla enter
-inputTags.addEventListener("keypress", (evento) => {
-    // Se o enter for pressionado executa uma função
-    if (evento.key === "Enter") {
-        //Previne o padrão de reload da página
-        evento.preventDefault();
-        // pega o valor digitado, trim garante e remove espaços em branco no começo e final
-        const tagTexto = inputTags.value.trim();
-        //
-        if (tagTexto !== "" && tagsDisponiveis.includes(tagTexto)) {
-            // Cria um novo elemento li
-            const tagNova = document.createElement("li");
-            // Adiciona o texto digitado como novo paragrafo dentro da li
-            tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`
-            // cria a tag como li filho da lista de tags
-            listaTags.appendChild(tagNova);
-            // Limpa o campo de input
-            inputTags.value = "";
-        } else {alert("Digite uma tag válida")};
-    }
-})
-
 listaTags.addEventListener("click", (evento) => {
     //Verifica o local clicado
     if (evento.target.classList.contains("remove-tag")) {
@@ -90,7 +68,7 @@ listaTags.addEventListener("click", (evento) => {
 }) 
 
 // Variável disponíveis
-const tagsDisponiveis = ["gato-laranja", "gato-preto", "gato-branco"]
+const tagsDisponiveis = ["gato", "gato-laranja", "gato-preto", "gato-branco"]
 
 // Async function para buscar as tags disponíveis
 async function buscarTags(tagtexto) {
@@ -99,6 +77,71 @@ async function buscarTags(tagtexto) {
         setTimeout(() => {
             resolve(tagsDisponiveis.includes(tagtexto));
         }, 1000) 
+    })
+}
+
+//verifica o pressionamento da tecla enter
+inputTags.addEventListener("keypress", async (evento) => {
+    // Se o enter for pressionado executa uma função
+    if (evento.key === "Enter") {
+        //Previne o padrão de reload da página
+        evento.preventDefault();
+        // pega o valor digitado, trim garante e remove espaços em branco no começo e final
+        const tagTexto = inputTags.value.trim();
+        //
+        if (tagTexto !== "") {
+                try {
+                    //seleciona e verica se a tag existe
+                    const tagExiste = await buscarTags(tagTexto);
+                    if (tagExiste) {
+                        // Cria um novo elemento li
+                        const tagNova = document.createElement("li");
+                        // Adiciona o texto digitado como novo paragrafo dentro da li
+                        tagNova.innerHTML = `<p>${tagTexto}</p> <img src="./img/close-black.svg" class="remove-tag">`
+                        // cria a tag como li filho da lista de tags
+                        listaTags.appendChild(tagNova);
+                        // Limpa o campo de input
+                        inputTags.value = "";
+                    } else {
+                        // Erro na busca da Tag
+                        alert("Tag não foi encontrada");
+                    }
+                } catch (error) {
+                    // Erro na requisição de busca da tag
+                    console.error("Erro na busca da tag");
+                    alert("Erro ao verificar as tags");
+                }
+        }
+    }
+})
+
+// Captura click no botão publicar
+const btnPublicar = document.querySelector(".btn-publicar");
+btnPublicar.addEventListener("click", async (evento) => {
+    // Previne o padrão de reload da página
+    evento.preventDefault();
+
+    const nomeDoProjeto = document.getElementById("nome").value;
+    const descricaoDoProjeto = document.getElementById("descricao").value;
+    const tagsProjeto = Array.from(listaTags.querySelectorAll("p")).map((tag) => tag.textContent);
+
+    console.log(nomeDoProjeto);
+    console.log(descricaoDoProjeto);
+    console.log(tagsProjeto);
+})
+
+//Simula o envio para um banco de dados
+async function publicarProjeto(nomeDoProjeto, descricaoDoProjeto, tagsProjeto) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const deuCerto = Math.random() > 0.5;
+
+            if (deuCerto) {
+                resolve("Projeto publicado com sucesso!");
+            } else {
+                reject("Erro ao publicar o projeto!");
+            }
+        }, 2000)
     })
 }
 
